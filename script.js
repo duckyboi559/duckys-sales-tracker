@@ -1,100 +1,129 @@
-* {
-  box-sizing: border-box;
+let data = {
+  bacon: {
+    count: Number(localStorage.getItem("baconCount")) || 0,
+    price: Number(localStorage.getItem("baconPrice")) || 5
+  },
+  quack: {
+    count: Number(localStorage.getItem("quackCount")) || 0,
+    price: Number(localStorage.getItem("quackPrice")) || 6
+  },
+  fries: {
+    count: Number(localStorage.getItem("friesCount")) || 0,
+    price: Number(localStorage.getItem("friesPrice")) || 10
+  }
+};
+
+let lastUpdated = localStorage.getItem("lastUpdated") || "Not yet";
+
+const baconCountEl = document.getElementById("baconCount");
+const quackCountEl = document.getElementById("quackCount");
+const friesCountEl = document.getElementById("friesCount");
+
+const baconTotalEl = document.getElementById("baconTotal");
+const quackTotalEl = document.getElementById("quackTotal");
+const friesTotalEl = document.getElementById("friesTotal");
+
+const grandTotalEl = document.getElementById("grandTotal");
+const totalItemsEl = document.getElementById("totalItems");
+const lastUpdatedEl = document.getElementById("lastUpdated");
+
+const baconPriceInput = document.getElementById("baconPrice");
+const quackPriceInput = document.getElementById("quackPrice");
+const friesPriceInput = document.getElementById("friesPrice");
+
+baconPriceInput.value = data.bacon.price;
+quackPriceInput.value = data.quack.price;
+friesPriceInput.value = data.fries.price;
+
+function formatMoney(amount) {
+  return `$${amount.toFixed(2)}`;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fff7c7;
-  color: #222;
+function updateTime() {
+  lastUpdated = new Date().toLocaleString();
 }
 
-.app {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px 15px 40px;
+function saveData() {
+  localStorage.setItem("baconCount", data.bacon.count);
+  localStorage.setItem("baconPrice", data.bacon.price);
+
+  localStorage.setItem("quackCount", data.quack.count);
+  localStorage.setItem("quackPrice", data.quack.price);
+
+  localStorage.setItem("friesCount", data.fries.count);
+  localStorage.setItem("friesPrice", data.fries.price);
+
+  localStorage.setItem("lastUpdated", lastUpdated);
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 5px;
+function updateScreen() {
+  baconCountEl.textContent = data.bacon.count;
+  quackCountEl.textContent = data.quack.count;
+  friesCountEl.textContent = data.fries.count;
+
+  baconTotalEl.textContent = formatMoney(data.bacon.count * data.bacon.price);
+  quackTotalEl.textContent = formatMoney(data.quack.count * data.quack.price);
+  friesTotalEl.textContent = formatMoney(data.fries.count * data.fries.price);
+
+  const grandTotal =
+    (data.bacon.count * data.bacon.price) +
+    (data.quack.count * data.quack.price) +
+    (data.fries.count * data.fries.price);
+
+  const totalItems =
+    data.bacon.count +
+    data.quack.count +
+    data.fries.count;
+
+  grandTotalEl.textContent = formatMoney(grandTotal);
+  totalItemsEl.textContent = totalItems;
+  lastUpdatedEl.textContent = lastUpdated;
 }
 
-.subtitle {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 20px;
+function changeCount(item, amount) {
+  data[item].count += amount;
+
+  if (data[item].count < 0) {
+    data[item].count = 0;
+  }
+
+  updateTime();
+  saveData();
+  updateScreen();
 }
 
-.item-card,
-.summary-card {
-  background: white;
-  border-radius: 18px;
-  padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+function resetDay() {
+  const confirmReset = confirm("Are you sure you want to reset the whole day?");
+  if (!confirmReset) return;
+
+  data.bacon.count = 0;
+  data.quack.count = 0;
+  data.fries.count = 0;
+
+  updateTime();
+  saveData();
+  updateScreen();
 }
 
-h2 {
-  margin-top: 0;
-}
+baconPriceInput.addEventListener("input", () => {
+  data.bacon.price = Number(baconPriceInput.value) || 0;
+  updateTime();
+  saveData();
+  updateScreen();
+});
 
-.price-line {
-  margin-bottom: 12px;
-  font-size: 1rem;
-}
+quackPriceInput.addEventListener("input", () => {
+  data.quack.price = Number(quackPriceInput.value) || 0;
+  updateTime();
+  saveData();
+  updateScreen();
+});
 
-.price-line input {
-  width: 90px;
-  padding: 8px;
-  font-size: 1rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-}
+friesPriceInput.addEventListener("input", () => {
+  data.fries.price = Number(friesPriceInput.value) || 0;
+  updateTime();
+  saveData();
+  updateScreen();
+});
 
-.count {
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 10px 0 15px;
-}
-
-.button-row {
-  display: flex;
-  gap: 10px;
-}
-
-.button-row button,
-.reset-btn {
-  flex: 1;
-  padding: 16px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.button-row button {
-  background: #ffd84d;
-}
-
-.reset-btn {
-  width: 100%;
-  background: #222;
-  color: white;
-  margin-top: 8px;
-}
-
-.item-total {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-top: 14px;
-  font-weight: bold;
-}
-
-.grand-total {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-}
+updateScreen();
