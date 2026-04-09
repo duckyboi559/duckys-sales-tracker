@@ -1,129 +1,95 @@
-let data = {
-    bacon: {
-        count: Number(localStorage.getItem("baconCount")) || 0,
-        price: Number(localStorage.getItem("baconPrice")) || 5
-    },
-    quack: {
-        count: Number(localStorage.getItem("quackCount")) || 0,
-        price: Number(localStorage.getItem("quackPrice")) || 6
-    },
-    fries: {
-        count: Number(localStorage.getItem("friesCount")) || 0,
-        price: Number(localStorage.getItem("friesPrice")) || 10
-    }
-};
-
-let lastUpdated = localStorage.getItem("lastUpdated") || "Not yet";
-
-const baconCountEl = document.getElementById("baconCount");
-const quackCountEl = document.getElementById("quackCount");
-const friesCountEl = document.getElementById("friesCount");
-
-const baconTotalEl = document.getElementById("baconTotal");
-const quackTotalEl = document.getElementById("quackTotal");
-const friesTotalEl = document.getElementById("friesTotal");
-
-const grandTotalEl = document.getElementById("grandTotal");
-const totalItemsEl = document.getElementById("totalItems");
-const lastUpdatedEl = document.getElementById("lastUpdated");
-
-const baconPriceInput = document.getElementById("baconPrice");
-const quackPriceInput = document.getElementById("quackPrice");
-const friesPriceInput = document.getElementById("friesPrice");
-
-baconPriceInput.value = data.bacon.price;
-quackPriceInput.value = data.quack.price;
-friesPriceInput.value = data.fries.price;
-
-function formatMoney(amount) {
-    return `$${amount.toFixed(2)}`;
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#fff7c2;
 }
 
-function updateTime() {
-    lastUpdated = new Date().toLocaleString();
+.background{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url('logo.png');
+background-size:400px;
+background-repeat:no-repeat;
+background-position:center;
+opacity:.08;
+z-index:-1;
 }
 
-function saveData() {
-    localStorage.setItem("baconCount", data.bacon.count);
-    localStorage.setItem("baconPrice", data.bacon.price);
-
-    localStorage.setItem("quackCount", data.quack.count);
-    localStorage.setItem("quackPrice", data.quack.price);
-
-    localStorage.setItem("friesCount", data.fries.count);
-    localStorage.setItem("friesPrice", data.fries.price);
-
-    localStorage.setItem("lastUpdated", lastUpdated);
+.app{
+max-width:500px;
+margin:auto;
+padding:20px;
 }
 
-function updateScreen() {
-    baconCountEl.textContent = data.bacon.count;
-    quackCountEl.textContent = data.quack.count;
-    friesCountEl.textContent = data.fries.count;
-
-    baconTotalEl.textContent = formatMoney(data.bacon.count * data.bacon.price);
-    quackTotalEl.textContent = formatMoney(data.quack.count * data.quack.price);
-    friesTotalEl.textContent = formatMoney(data.fries.count * data.fries.price);
-
-    const grandTotal =
-        (data.bacon.count * data.bacon.price) +
-        (data.quack.count * data.quack.price) +
-        (data.fries.count * data.fries.price);
-
-    const totalItems =
-        data.bacon.count +
-        data.quack.count +
-        data.fries.count;
-
-    grandTotalEl.textContent = formatMoney(grandTotal);
-    totalItemsEl.textContent = totalItems;
-    lastUpdatedEl.textContent = lastUpdated;
+.header{
+text-align:center;
+margin-bottom:20px;
 }
 
-function changeCount(item, amount) {
-    data[item].count += amount;
-
-    if (data[item].count < 0) {
-        data[item].count = 0;
-    }
-
-    updateTime();
-    saveData();
-    updateScreen();
+.logo{
+width:120px;
+margin-bottom:10px;
 }
 
-function resetDay() {
-    const confirmReset = confirm("Are you sure you want to reset the whole day?");
-    if (!confirmReset) return;
-
-    data.bacon.count = 0;
-    data.quack.count = 0;
-    data.fries.count = 0;
-
-    updateTime();
-    saveData();
-    updateScreen();
+h1{
+margin:0;
 }
 
-baconPriceInput.addEventListener("input", () => {
-    data.bacon.price = Number(baconPriceInput.value) || 0;
-    updateTime();
-    saveData();
-    updateScreen();
-});
+.card{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 4px 10px rgba(0,0,0,.1);
+text-align:center;
+}
 
-quackPriceInput.addEventListener("input", () => {
-    data.quack.price = Number(quackPriceInput.value) || 0;
-    updateTime();
-    saveData();
-    updateScreen();
-});
+.count{
+font-size:40px;
+font-weight:bold;
+margin:10px 0;
+}
 
-friesPriceInput.addEventListener("input", () => {
-    data.fries.price = Number(friesPriceInput.value) || 0;
-    updateTime();
-    saveData();
-    updateScreen();
-});
+.buttons{
+display:flex;
+gap:10px;
+}
 
-updateScreen();
+button{
+flex:1;
+padding:15px;
+border:none;
+border-radius:10px;
+font-size:18px;
+font-weight:bold;
+background:#ffd84d;
+}
+
+.money{
+margin-top:10px;
+font-weight:bold;
+}
+
+.totalBox{
+background:black;
+color:white;
+padding:15px;
+border-radius:15px;
+text-align:center;
+margin-top:10px;
+}
+
+.grand{
+font-size:35px;
+font-weight:bold;
+}
+
+.reset{
+width:100%;
+margin-top:15px;
+background:#222;
+color:white;
+}
