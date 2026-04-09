@@ -1,95 +1,100 @@
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#fff7c2;
+* {
+  box-sizing: border-box;
 }
 
-.background{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:url('logo.png');
-background-size:400px;
-background-repeat:no-repeat;
-background-position:center;
-opacity:.08;
-z-index:-1;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff7c7;
+  color: #222;
 }
 
-.app{
-max-width:500px;
-margin:auto;
-padding:20px;
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 15px 40px;
 }
 
-.header{
-text-align:center;
-margin-bottom:20px;
+h1 {
+  text-align: center;
+  margin-bottom: 5px;
 }
 
-.logo{
-width:120px;
-margin-bottom:10px;
+.subtitle {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
-h1{
-margin:0;
+.item-card,
+.summary-card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.card{
-background:white;
-padding:15px;
-border-radius:15px;
-margin-bottom:15px;
-box-shadow:0 4px 10px rgba(0,0,0,.1);
-text-align:center;
+h2 {
+  margin-top: 0;
 }
 
-.count{
-font-size:40px;
-font-weight:bold;
-margin:10px 0;
+.price-line {
+  margin-bottom: 12px;
+  font-size: 1rem;
 }
 
-.buttons{
-display:flex;
-gap:10px;
+.price-line input {
+  width: 90px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
 }
 
-button{
-flex:1;
-padding:15px;
-border:none;
-border-radius:10px;
-font-size:18px;
-font-weight:bold;
-background:#ffd84d;
+.count {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0 15px;
 }
 
-.money{
-margin-top:10px;
-font-weight:bold;
+.button-row {
+  display: flex;
+  gap: 10px;
 }
 
-.totalBox{
-background:black;
-color:white;
-padding:15px;
-border-radius:15px;
-text-align:center;
-margin-top:10px;
+.button-row button,
+.reset-btn {
+  flex: 1;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
-.grand{
-font-size:35px;
-font-weight:bold;
+.button-row button {
+  background: #ffd84d;
 }
 
-.reset{
-width:100%;
-margin-top:15px;
-background:#222;
-color:white;
+.reset-btn {
+  width: 100%;
+  background: #222;
+  color: white;
+  margin-top: 8px;
+}
+
+.item-total {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 14px;
+  font-weight: bold;
+}
+
+.grand-total {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
 }
